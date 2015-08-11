@@ -18,6 +18,10 @@ RUN mkdir -p /app/goroot
 RUN mkdir -p /app/gopath/src/app
 RUN mkdir -p /app/gopath/bin
 
+# Need to set PATH when Heroku tries to run the container, as well
+RUN mkdir -p /app/.profile.d
+RUN echo "export PATH=\"/app/gopath/bin:\$PATH\"" >> /app/.profile.d/profile.sh
+
 ENV GOVERSION 1.5rc1
 RUN curl https://storage.googleapis.com/golang/go$GOVERSION.linux-amd64.tar.gz \
            | tar xvzf - -C /app/goroot --strip-components=1
